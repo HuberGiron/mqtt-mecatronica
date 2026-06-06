@@ -1,0 +1,2 @@
+mode,label,broker,port,transport,tls,count_requested,count_received,count_missing,qos,interval_s,mean_s,std_s,median_s,p95_s,p99_s,min_s,max_s,csv_path,png_path
+ws9001,WebSocket 9001 sin TLS,mqtt.mecatronica-ibero.mx,9001,websockets,False,4000,4000,0,0,0.05,0.1297303061,0.06023770592565971,0.11969775,0.20809815499999992,0.38127737799999933,0.0735914,1.0433581,mqtt_latency_results\mqtt_latency_ws9001_20260425_195335.csv,mqtt_latency_results\mqtt_latency_ws9001_20260425_195335.png

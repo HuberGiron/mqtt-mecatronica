@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MQTT JS Test</title>
+</head>
+<body>
+  <h1>Prueba MQTT JS</h1>
+  <pre id="log"></pre>
+
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script>
+    const log = (msg) => {
+      document.getElementById("log").textContent += msg + "\n";
+      console.log(msg);
+    };
+
+    const client = mqtt.connect("wss://mqtt.mecatronica-ibero.mx/", {
+      clientId: "browser-test-" + Math.random().toString(16).substring(2),
+      username: "huber",
+      password: "1234",
+      reconnectPeriod: 2000,
+      connectTimeout: 8000
+    });
+
+    client.on("connect", () => {
+      log("Conectado desde navegador");
+      client.subscribe("huber/test");
+      client.publish("huber/test", "Hola desde JavaScript navegador");
+    });
+
+    client.on("message", (topic, message) => {
+      log(topic + " -> " + message.toString());
+    });
+
+    client.on("error", (err) => {
+      log("Error: " + err.message);
+    });
+  </script>
+</body>
+</html>

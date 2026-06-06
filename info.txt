@@ -1,0 +1,4 @@
+mqtt://mqtt.mecatronica-ibero.mx:1883
+mqtts://mqtt.mecatronica-ibero.mx:8883
+ws://mqtt.mecatronica-ibero.mx:9001/
+wss://mqtt.mecatronica-ibero.mx/

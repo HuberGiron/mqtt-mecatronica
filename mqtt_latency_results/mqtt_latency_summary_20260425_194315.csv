@@ -1,0 +1,2 @@
+mode,label,broker,port,transport,tls,count_requested,count_received,count_missing,qos,interval_s,mean_s,std_s,median_s,p95_s,p99_s,min_s,max_s,csv_path,png_path
+mqtt1883,MQTT 1883 sin TLS,mqtt.mecatronica-ibero.mx,1883,tcp,False,4000,4000,0,0,0.05,0.21151025769999998,0.09398734706494807,0.19781415,0.28475333999999997,0.7058393939999996,0.075065,1.3962185,mqtt_latency_results\mqtt_latency_mqtt1883_20260425_194315.csv,mqtt_latency_results\mqtt_latency_mqtt1883_20260425_194315.png
