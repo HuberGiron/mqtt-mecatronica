@@ -452,6 +452,36 @@
       font-size: 0.92rem;
     }
 
+
+    .policy-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .policy-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .policy-card strong {
+      display: block;
+      color: var(--ibero-red);
+      margin-bottom: 6px;
+      font-size: 1.05rem;
+    }
+
+    .contact-card {
+      background: var(--ibero-red-soft);
+      border: 1px solid rgba(200, 16, 46, 0.22);
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
     @media (max-width: 860px) {
       .hero-grid,
       .grid-2,
@@ -462,6 +492,10 @@
 
       .latency-summary,
       .figure-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .policy-list {
         grid-template-columns: 1fr;
       }
 
@@ -498,7 +532,7 @@
         </div>
         <div class="hero-card">
           <strong>9001</strong>
-          <span>WebSocket interno — no expuesto públicamente</span>
+          <span>WebSocket sin TLS interno — no expuesto públicamente</span>
         </div>
         <div class="hero-card">
           <strong>443</strong>
@@ -549,7 +583,7 @@
           </tr>
           <tr>
             <td><strong>9001</strong></td>
-            <td>WebSocket interno — no expuesto públicamente</td>
+            <td>WebSocket sin TLS interno — no expuesto públicamente</td>
             <td><code>ws://mqtt.mecatronica-ibero.mx:9001/</code></td>
             <td>Pruebas directas WebSocket sin pasar por Nginx.</td>
           </tr>
@@ -563,6 +597,89 @@
       </table>
     </section>
 
+
+
+    <section>
+      <h2>Acceso, usuarios y canales disponibles</h2>
+      <p class="lead">
+        Este broker puede funcionar con usuarios y contraseñas. Para actividades generales, los estudiantes pueden usar
+        únicamente los tópicos públicos definidos por el profesor. Para proyectos especiales, robots físicos, planeadores,
+        backends o integraciones con sistemas reales, se asignarán usuarios y canales específicos.
+      </p>
+
+      <div class="policy-list">
+        <div class="policy-card">
+          <strong>Acceso general para estudiantes</strong>
+          <p>El canal sugerido para pruebas abiertas es <code>public/#</code>. Por ejemplo:
+          <code>public/test</code>, <code>public/demo/equipo1</code> o <code>public/clase/sensores</code>.</p>
+        </div>
+
+        <div class="policy-card">
+          <strong>Acceso asignado por usuario</strong>
+          <p>Los usuarios autorizados pueden recibir un canal propio, por ejemplo:
+          <code>users/usuario/#</code>, <code>cursos/clave/equipo/#</code> o <code>proyectos/nombre/#</code>.</p>
+        </div>
+
+        <div class="policy-card">
+          <strong>Canales restringidos</strong>
+          <p>No publiques en tópicos de robots, planeadores o infraestructura si no se te asignaron explícitamente.
+          Ejemplos restringidos: <code>huber/robot/#</code>, <code>huber/R1/#</code>, <code>huber/R2/#</code>.</p>
+        </div>
+
+        <div class="policy-card">
+          <strong>Buenas prácticas</strong>
+          <p>Usa nombres claros, evita publicar mensajes en bucle sin control, no envíes imágenes o archivos pesados
+          sin autorización y no compartas credenciales.</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <strong>Solicitud de usuario o canal dedicado</strong>
+        <p>
+          Para solicitar un usuario, contraseña o canal dedicado para un proyecto, escribe a
+          <a href="mailto:huber.giron@ibero.mx">huber.giron@ibero.mx</a> indicando nombre, curso/proyecto,
+          propósito del canal y tipo de aplicación a conectar.
+        </p>
+      </div>
+
+      <h3>Política sugerida de tópicos</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de uso</th>
+            <th>Tópico sugerido</th>
+            <th>Permiso esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pruebas generales</td>
+            <td><code>public/#</code></td>
+            <td>Lectura y publicación para demos o prácticas abiertas.</td>
+          </tr>
+          <tr>
+            <td>Usuario individual</td>
+            <td><code>users/&lt;usuario&gt;/#</code></td>
+            <td>Lectura y publicación solo para el usuario asignado.</td>
+          </tr>
+          <tr>
+            <td>Equipo de clase</td>
+            <td><code>cursos/&lt;clave&gt;/equipo&lt;n&gt;/#</code></td>
+            <td>Lectura y publicación para el equipo autorizado.</td>
+          </tr>
+          <tr>
+            <td>Proyecto especial</td>
+            <td><code>proyectos/&lt;nombre&gt;/#</code></td>
+            <td>Lectura y publicación para los participantes del proyecto.</td>
+          </tr>
+          <tr>
+            <td>Robots o infraestructura</td>
+            <td><code>huber/robot/#</code>, <code>huber/R1/#</code></td>
+            <td>Restringido a usuarios autorizados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
     <section>
       <h2>Resultados de latencia del broker</h2>
@@ -588,7 +705,7 @@
         </div>
         <div class="metric-card">
           <strong>0.1297 s</strong>
-          <span>Media WebSocket 9001 interno — no expuesto públicamente</span>
+          <span>Media WebSocket 9001 sin TLS interno — no expuesto públicamente</span>
         </div>
         <div class="metric-card">
           <strong>0.1320 s</strong>
@@ -628,7 +745,7 @@
             <td>Mejor estabilidad que 1883; buena opción para clientes MQTT nativos seguros.</td>
           </tr>
           <tr>
-            <td>WebSocket 9001 interno — no expuesto públicamente</td>
+            <td>WebSocket 9001 sin TLS interno — no expuesto públicamente</td>
             <td>4000/4000</td>
             <td>0.1297 s</td>
             <td>0.1197 s</td>
@@ -673,7 +790,7 @@
         <figure class="figure-card">
           <img src="assets/mqtt_latency_ws9001_20260425_195335.png" alt="Gráfica de latencia WebSocket 9001 sin TLS">
           <figcaption class="figure-caption">
-            <strong>WebSocket 9001 interno — no expuesto públicamente</strong>
+            <strong>WebSocket 9001 sin TLS interno — no expuesto públicamente</strong>
             <span>Media 0.1297 s · Mediana 0.1197 s · P95 0.2081 s · P99 0.3813 s.</span>
           </figcaption>
         </figure>
@@ -693,7 +810,8 @@
       <h2>Prueba rápida desde esta página</h2>
       <p class="lead">
         Este probador usa MQTT.js desde el navegador y se conecta por <code>wss://mqtt.mecatronica-ibero.mx/</code>.
-        No guarda las credenciales; solo las usa en esta sesión del navegador.
+        Puede conectarse con usuario y contraseña, o sin credenciales si el broker tiene habilitado el acceso anónimo
+        para tópicos públicos como <code>public/#</code>. No guarda las credenciales; solo las usa en esta sesión del navegador.
       </p>
 
       <div class="tester">
@@ -708,8 +826,19 @@
         </div>
 
         <div>
+          <label for="anonymousMode">Modo de conexión</label>
+          <div style="margin-top: 10px; display: flex; gap: 10px; align-items: center;">
+            <input id="anonymousMode" type="checkbox" style="width: auto; margin: 0;" />
+            <span>Conectar sin usuario ni contraseña</span>
+          </div>
+          <p style="margin-top: 8px; color: var(--muted); font-size: 0.92rem;">
+            Úsalo solo para tópicos públicos, por ejemplo <code>public/test</code>.
+          </p>
+        </div>
+
+        <div>
           <label for="topic">Tópico</label>
-          <input id="topic" value="huber/test" />
+          <input id="topic" value="public/test" />
         </div>
 
         <div>
@@ -732,6 +861,46 @@
     <section>
       <h2>Ejemplos HTML + JavaScript</h2>
 
+      <h3>Antes de elegir ejemplo: conexión con o sin credenciales</h3>
+      <p>
+        Si el broker requiere usuario y contraseña, incluye <code>username</code> y <code>password</code>.
+        Si el broker permite acceso anónimo para <code>public/#</code>, omite ambos campos.
+      </p>
+
+      <div class="grid-2">
+        <div class="mini-card">
+          <span class="label">Con usuario y contraseña</span>
+          <div class="code-block">
+            <div class="code-title">
+              <span>MQTT.js · opciones con credenciales</span>
+              <button class="copy-btn" onclick="copyCode('code-js-auth-options')">Copiar</button>
+            </div>
+            <pre><code id="code-js-auth-options">const options = {
+  username: "USUARIO",
+  password: "PASSWORD",
+  clientId: "browser-" + Math.random().toString(16).substring(2),
+  reconnectPeriod: 2000,
+  connectTimeout: 8000
+};</code></pre>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <span class="label">Sin usuario ni contraseña</span>
+          <div class="code-block">
+            <div class="code-title">
+              <span>MQTT.js · opciones anónimas</span>
+              <button class="copy-btn" onclick="copyCode('code-js-anon-options')">Copiar</button>
+            </div>
+            <pre><code id="code-js-anon-options">const options = {
+  clientId: "browser-public-" + Math.random().toString(16).substring(2),
+  reconnectPeriod: 2000,
+  connectTimeout: 8000
+};</code></pre>
+          </div>
+        </div>
+      </div>
+
       <h3>1. Navegador por WSS, puerto 443</h3>
       <p>Este es el ejemplo recomendado para páginas web.</p>
       <div class="code-block">
@@ -742,18 +911,28 @@
         <pre><code id="code-js-wss">&lt;script src="https://unpkg.com/mqtt/dist/mqtt.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
-const client = mqtt.connect("wss://mqtt.mecatronica-ibero.mx/", {
+// Opción A: con usuario y contraseña
+const options = {
   username: "USUARIO",
   password: "PASSWORD",
   clientId: "browser-" + Math.random().toString(16).substring(2),
   reconnectPeriod: 2000,
   connectTimeout: 8000
-});
+};
+
+// Opción B: sin usuario ni contraseña, solo si el broker permite acceso anónimo
+// const options = {
+//   clientId: "browser-public-" + Math.random().toString(16).substring(2),
+//   reconnectPeriod: 2000,
+//   connectTimeout: 8000
+// };
+
+const client = mqtt.connect("wss://mqtt.mecatronica-ibero.mx/", options);
 
 client.on("connect", () =&gt; {
   console.log("Conectado por WSS 443");
-  client.subscribe("huber/test");
-  client.publish("huber/test", "Hola desde navegador por WSS 443");
+  client.subscribe("public/test");
+  client.publish("public/test", "Hola desde navegador por WSS 443");
 });
 
 client.on("message", (topic, message) =&gt; {
@@ -766,7 +945,7 @@ client.on("error", (err) =&gt; {
 &lt;/script&gt;</code></pre>
       </div>
 
-      <h3>2. Navegador por WS, puerto 9001 WebSocket interno — no expuesto públicamente</h3>
+      <h3>2. Navegador por WS, puerto 9001 interno — no expuesto públicamente</h3>
       <p>Útil para pruebas directas sin TLS. No es recomendable para una página pública en producción.</p>
       <div class="code-block">
         <div class="code-title">
@@ -776,16 +955,24 @@ client.on("error", (err) =&gt; {
         <pre><code id="code-js-ws">&lt;script src="https://unpkg.com/mqtt/dist/mqtt.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
-const client = mqtt.connect("ws://mqtt.mecatronica-ibero.mx:9001/", {
+// Con usuario y contraseña
+const options = {
   username: "USUARIO",
   password: "PASSWORD",
   clientId: "browser-ws-" + Math.random().toString(16).substring(2)
-});
+};
+
+// Sin usuario ni contraseña, solo para acceso anónimo permitido
+// const options = {
+//   clientId: "browser-ws-public-" + Math.random().toString(16).substring(2)
+// };
+
+const client = mqtt.connect("ws://mqtt.mecatronica-ibero.mx:9001/", options);
 
 client.on("connect", () =&gt; {
   console.log("Conectado por WS 9001");
-  client.subscribe("huber/test");
-  client.publish("huber/test", "Hola desde navegador por WS 9001");
+  client.subscribe("public/test");
+  client.publish("public/test", "Hola desde navegador por WS 9001");
 });
 
 client.on("message", (topic, message) =&gt; {
@@ -797,6 +984,43 @@ client.on("message", (topic, message) =&gt; {
 
     <section>
       <h2>Ejemplos Python</h2>
+
+      <h3>Antes de elegir ejemplo: con o sin credenciales</h3>
+      <p>
+        En Python con Paho MQTT, la diferencia es simple: si tienes usuario y contraseña, llama
+        <code>if USE_AUTH:
+    client.username_pw_set(USERNAME, PASSWORD)</code>. Si el broker permite acceso anónimo, no llames esa función.
+      </p>
+
+      <div class="grid-2">
+        <div class="mini-card">
+          <span class="label">Con usuario y contraseña</span>
+          <div class="code-block">
+            <div class="code-title">
+              <span>Paho MQTT · credenciales</span>
+              <button class="copy-btn" onclick="copyCode('code-py-auth-pattern')">Copiar</button>
+            </div>
+            <pre><code id="code-py-auth-pattern">USERNAME = "USUARIO"
+PASSWORD = "PASSWORD"
+
+client = mqtt.Client(client_id="cliente-con-usuario")
+client.username_pw_set(USERNAME, PASSWORD)</code></pre>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <span class="label">Sin usuario ni contraseña</span>
+          <div class="code-block">
+            <div class="code-title">
+              <span>Paho MQTT · anónimo</span>
+              <button class="copy-btn" onclick="copyCode('code-py-anon-pattern')">Copiar</button>
+            </div>
+            <pre><code id="code-py-anon-pattern">client = mqtt.Client(client_id="cliente-publico")
+# No usar client.username_pw_set(...)
+# Usar solamente tópicos públicos, por ejemplo public/test</code></pre>
+          </div>
+        </div>
+      </div>
 
       <h3>1. Python por MQTT sin TLS, puerto 1883</h3>
       <div class="code-block">
@@ -810,7 +1034,8 @@ BROKER = "mqtt.mecatronica-ibero.mx"
 PORT = 1883
 USERNAME = "USUARIO"
 PASSWORD = "PASSWORD"
-TOPIC = "huber/test"
+USE_AUTH = True  # Cambiar a False si usarás acceso anónimo
+TOPIC = "public/test"
 
 def on_connect(client, userdata, flags, rc):
     print("Conectado:", rc)
@@ -821,7 +1046,8 @@ def on_message(client, userdata, msg):
     print(msg.topic, "-&gt;", msg.payload.decode())
 
 client = mqtt.Client(client_id="python-1883-test")
-client.username_pw_set(USERNAME, PASSWORD)
+if USE_AUTH:
+    client.username_pw_set(USERNAME, PASSWORD)
 
 client.on_connect = on_connect
 client.on_message = on_message
@@ -843,7 +1069,8 @@ BROKER = "mqtt.mecatronica-ibero.mx"
 PORT = 8883
 USERNAME = "USUARIO"
 PASSWORD = "PASSWORD"
-TOPIC = "huber/test"
+USE_AUTH = True  # Cambiar a False si usarás acceso anónimo
+TOPIC = "public/test"
 
 def on_connect(client, userdata, flags, rc):
     print("Conectado:", rc)
@@ -854,7 +1081,8 @@ def on_message(client, userdata, msg):
     print(msg.topic, "-&gt;", msg.payload.decode())
 
 client = mqtt.Client(client_id="python-8883-test")
-client.username_pw_set(USERNAME, PASSWORD)
+if USE_AUTH:
+    client.username_pw_set(USERNAME, PASSWORD)
 client.tls_set(cert_reqs=ssl.CERT_REQUIRED)
 
 client.on_connect = on_connect
@@ -877,7 +1105,8 @@ BROKER = "mqtt.mecatronica-ibero.mx"
 PORT = 443
 USERNAME = "USUARIO"
 PASSWORD = "PASSWORD"
-TOPIC = "huber/test"
+USE_AUTH = True  # Cambiar a False si usarás acceso anónimo
+TOPIC = "public/test"
 
 def on_connect(client, userdata, flags, rc):
     print("Conectado:", rc)
@@ -892,7 +1121,8 @@ client = mqtt.Client(
     transport="websockets"
 )
 
-client.username_pw_set(USERNAME, PASSWORD)
+if USE_AUTH:
+    client.username_pw_set(USERNAME, PASSWORD)
 client.ws_set_options(path="/")
 client.tls_set(cert_reqs=ssl.CERT_REQUIRED)
 
@@ -915,7 +1145,8 @@ BROKER = "mqtt.mecatronica-ibero.mx"
 PORT = 9001
 USERNAME = "USUARIO"
 PASSWORD = "PASSWORD"
-TOPIC = "huber/test"
+USE_AUTH = True  # Cambiar a False si usarás acceso anónimo
+TOPIC = "public/test"
 
 def on_connect(client, userdata, flags, rc):
     print("Conectado:", rc)
@@ -930,7 +1161,8 @@ client = mqtt.Client(
     transport="websockets"
 )
 
-client.username_pw_set(USERNAME, PASSWORD)
+if USE_AUTH:
+    client.username_pw_set(USERNAME, PASSWORD)
 client.ws_set_options(path="/")
 
 client.on_connect = on_connect
@@ -942,86 +1174,149 @@ client.loop_forever()</code></pre>
     </section>
 
 
+
     <section>
-      <h2>Crear un usuario nuevo en Mosquitto</h2>
+      <h2>Configuración de usuarios, contraseñas y permisos</h2>
       <p class="lead">
-        El broker usa autenticación con archivo de contraseñas. Los usuarios se administran desde el servidor con
-        <code>mosquitto_passwd</code>. No publiques estas contraseñas en repositorios, páginas públicas ni archivos compartidos.
+        Esta sección es para administración del broker. Mosquitto puede controlar el acceso con un archivo de contraseñas
+        y un archivo ACL, donde se define qué tópicos puede leer o publicar cada usuario.
       </p>
 
-      <div class="warning">
-        Usa <code>-c</code> solamente la primera vez que creas el archivo de contraseñas. Si usas <code>-c</code> después,
-        puedes sobrescribir el archivo y borrar los usuarios existentes.
+      <h3>1. Configuración base de Mosquitto con usuarios y ACL</h3>
+      <p>Archivo sugerido: <code>/etc/mosquitto/conf.d/mecatronica.conf</code></p>
+
+      <div class="code-block">
+        <div class="code-title">
+          <span>mosquitto.conf · usuarios + ACL</span>
+          <button class="copy-btn" onclick="copyCode('code-acl-mosquitto-conf')">Copiar</button>
+        </div>
+        <pre><code id="code-acl-mosquitto-conf">allow_anonymous true
+password_file /etc/mosquitto/passwd
+acl_file /etc/mosquitto/acl
+
+# MQTT sin TLS
+listener 1883 0.0.0.0
+protocol mqtt
+
+# WebSocket sin TLS
+listener 9001 0.0.0.0
+protocol websockets
+
+# MQTT con TLS
+listener 8883 0.0.0.0
+protocol mqtt
+certfile /etc/mosquitto/certs/fullchain.pem
+keyfile /etc/mosquitto/certs/privkey.pem</code></pre>
       </div>
 
-      <h3>1. Crear el primer usuario</h3>
-      <p>Ejecuta esto solamente si todavía no existe <code>/etc/mosquitto/passwd</code>:</p>
+      <div class="warning">
+        Si <code>allow_anonymous true</code> está activo, cualquier persona podría conectarse sin usuario. Por eso es
+        indispensable usar <code>acl_file</code> para limitar el acceso anónimo a tópicos como <code>public/#</code>.
+      </div>
+
+      <h3>2. Crear el archivo ACL</h3>
+      <div class="code-block">
+        <div class="code-title">
+          <span>Terminal · crear ACL</span>
+          <button class="copy-btn" onclick="copyCode('code-create-acl-file')">Copiar</button>
+        </div>
+        <pre><code id="code-create-acl-file">sudo nano /etc/mosquitto/acl</code></pre>
+      </div>
+
+      <p>Ejemplo de ACL para acceso público controlado y usuarios especiales:</p>
+      <div class="code-block">
+        <div class="code-title">
+          <span>/etc/mosquitto/acl · ejemplo</span>
+          <button class="copy-btn" onclick="copyCode('code-acl-example')">Copiar</button>
+        </div>
+        <pre><code id="code-acl-example"># Acceso anónimo: solo zona pública
+topic readwrite public/#
+
+# Administrador general
+user huber
+topic readwrite #
+
+# Usuario para frontend web
+user frontend
+topic readwrite public/#
+topic readwrite cursos/#
+topic read huber/robot/plan/status
+topic read huber/robot/goal
+
+# Usuario para planner LLM → Robot
+user planner
+topic readwrite huber/robot/#
+topic read public/#
+topic read cursos/#
+
+# Robot 1
+user robot1
+topic readwrite huber/R1/#
+
+# Equipo de estudiantes
+user equipo1
+topic readwrite cursos/cps/equipo1/#
+topic readwrite public/#
+
+user equipo2
+topic readwrite cursos/cps/equipo2/#
+topic readwrite public/#
+
+# Proyecto especial
+user proyecto_demo
+topic readwrite proyectos/demo/#</code></pre>
+      </div>
+
+      <h3>3. Crear usuarios con contraseña</h3>
+      <p>Usa <code>-c</code> solamente si todavía no existe el archivo <code>/etc/mosquitto/passwd</code>:</p>
       <div class="code-block">
         <div class="code-title">
           <span>Terminal · primer usuario</span>
-          <button class="copy-btn" onclick="copyCode('code-user-first')">Copiar</button>
+          <button class="copy-btn" onclick="copyCode('code-passwd-first-user')">Copiar</button>
         </div>
-        <pre><code id="code-user-first">sudo mosquitto_passwd -c /etc/mosquitto/passwd huber</code></pre>
+        <pre><code id="code-passwd-first-user">sudo mosquitto_passwd -c /etc/mosquitto/passwd huber</code></pre>
       </div>
 
-      <h3>2. Agregar usuarios adicionales</h3>
-      <p>Para agregar usuarios nuevos, ya sin <code>-c</code>:</p>
+      <p>Para agregar usuarios adicionales, no uses <code>-c</code>:</p>
       <div class="code-block">
         <div class="code-title">
-          <span>Terminal · usuarios adicionales</span>
-          <button class="copy-btn" onclick="copyCode('code-user-add')">Copiar</button>
+          <span>Terminal · usuarios con permisos especiales</span>
+          <button class="copy-btn" onclick="copyCode('code-passwd-special-users')">Copiar</button>
         </div>
-        <pre><code id="code-user-add">sudo mosquitto_passwd /etc/mosquitto/passwd frontend
+        <pre><code id="code-passwd-special-users">sudo mosquitto_passwd /etc/mosquitto/passwd frontend
 sudo mosquitto_passwd /etc/mosquitto/passwd planner
-sudo mosquitto_passwd /etc/mosquitto/passwd robot1
-sudo mosquitto_passwd /etc/mosquitto/passwd robot2</code></pre>
+sudo mosquitto_passwd /etc/mosquitto/passwd robot1</code></pre>
       </div>
 
-      <h3>3. Ajustar permisos del archivo de contraseñas</h3>
+      <h3>4. Permisos de archivos y reinicio</h3>
       <div class="code-block">
         <div class="code-title">
-          <span>Terminal · permisos recomendados</span>
-          <button class="copy-btn" onclick="copyCode('code-user-permissions')">Copiar</button>
+          <span>Terminal · permisos y reinicio</span>
+          <button class="copy-btn" onclick="copyCode('code-acl-permissions-restart')">Copiar</button>
         </div>
-        <pre><code id="code-user-permissions">sudo chown root:mosquitto /etc/mosquitto/passwd
-sudo chmod 640 /etc/mosquitto/passwd</code></pre>
-      </div>
+        <pre><code id="code-acl-permissions-restart">sudo chown root:mosquitto /etc/mosquitto/passwd
+sudo chmod 640 /etc/mosquitto/passwd
 
-      <h3>4. Reiniciar Mosquitto</h3>
-      <div class="code-block">
-        <div class="code-title">
-          <span>Terminal · reinicio y verificación</span>
-          <button class="copy-btn" onclick="copyCode('code-user-restart')">Copiar</button>
-        </div>
-        <pre><code id="code-user-restart">sudo systemctl restart mosquitto
+sudo chown root:mosquitto /etc/mosquitto/acl
+sudo chmod 640 /etc/mosquitto/acl
+
+sudo systemctl restart mosquitto
 sudo systemctl status mosquitto --no-pager -l</code></pre>
       </div>
 
-      <h3>5. Cambiar contraseña de un usuario existente</h3>
-      <p>El mismo comando sirve para actualizar la contraseña de un usuario ya creado:</p>
+      <h3>5. Probar acceso público y restringido</h3>
+      <p>Prueba pública sin usuario:</p>
       <div class="code-block">
         <div class="code-title">
-          <span>Terminal · cambiar contraseña</span>
-          <button class="copy-btn" onclick="copyCode('code-user-change')">Copiar</button>
+          <span>Terminal · prueba pública</span>
+          <button class="copy-btn" onclick="copyCode('code-test-public-no-user')">Copiar</button>
         </div>
-        <pre><code id="code-user-change">sudo mosquitto_passwd /etc/mosquitto/passwd robot1
-sudo systemctl restart mosquitto</code></pre>
+        <pre><code id="code-test-public-no-user">mosquitto_pub -h mqtt.mecatronica-ibero.mx -p 1883 -t "public/test" -m "hola público"</code></pre>
       </div>
 
-      <h3>6. Eliminar un usuario</h3>
-      <div class="code-block">
-        <div class="code-title">
-          <span>Terminal · eliminar usuario</span>
-          <button class="copy-btn" onclick="copyCode('code-user-delete')">Copiar</button>
-        </div>
-        <pre><code id="code-user-delete">sudo mosquitto_passwd -D /etc/mosquitto/passwd robot1
-sudo systemctl restart mosquitto</code></pre>
       </div>
 
-      <div class="ok">
-        Recomendación: crea usuarios por tipo de cliente, por ejemplo <code>frontend</code>, <code>planner</code>,
-        <code>robot1</code>, <code>robot2</code> o por curso/proyecto. Esto facilita revocar accesos sin afectar a todos.
-      </div>
+      <p>Un usuario sin permisos no puede publicar en canales restringidos como <code>huber/R1/cmd</code>.</p>
     </section>
 
     <section>
@@ -1056,7 +1351,7 @@ sudo systemctl restart mosquitto</code></pre>
         </div>
 
         <div class="mini-card">
-          <span class="label">WS 9001 WebSocket interno — no expuesto públicamente</span>
+          <span class="label">WS 9001 interno — no expuesto públicamente</span>
           <p><strong>Protocol:</strong> <code>ws://</code></p>
           <p><strong>Host:</strong> <code>mqtt.mecatronica-ibero.mx</code></p>
           <p><strong>Port:</strong> <code>9001</code></p>
@@ -1068,7 +1363,7 @@ sudo systemctl restart mosquitto</code></pre>
     </section>
 
     <div class="footer">
-      Mecatrónica Ibero · Broker MQTT para proyectos académicos, prototipado, robótica e IoT.
+      Mecatrónica Ibero · Broker MQTT para proyectos académicos, prototipado, robótica e IoT · Contacto: huber.giron@ibero.mx
     </div>
   </main>
 
@@ -1099,9 +1394,10 @@ sudo systemctl restart mosquitto</code></pre>
     function connectMqtt() {
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value;
+      const anonymousMode = document.getElementById("anonymousMode")?.checked || false;
 
-      if (!username || !password) {
-        appendLog("Falta usuario o contraseña.");
+      if (!anonymousMode && (!username || !password)) {
+        appendLog("Falta usuario o contraseña. También puedes activar 'Conectar sin usuario ni contraseña' para probar tópicos públicos.");
         return;
       }
 
@@ -1110,18 +1406,27 @@ sudo systemctl restart mosquitto</code></pre>
         return;
       }
 
-      appendLog("Conectando a wss://mqtt.mecatronica-ibero.mx/ ...");
-
-      mqttClient = mqtt.connect("wss://mqtt.mecatronica-ibero.mx/", {
-        username,
-        password,
+      const options = {
         clientId: "public-page-" + Math.random().toString(16).substring(2),
         reconnectPeriod: 2000,
         connectTimeout: 8000
-      });
+      };
+
+      if (!anonymousMode) {
+        options.username = username;
+        options.password = password;
+      }
+
+      appendLog(
+        anonymousMode
+          ? "Conectando sin credenciales a wss://mqtt.mecatronica-ibero.mx/ ..."
+          : "Conectando con usuario a wss://mqtt.mecatronica-ibero.mx/ ..."
+      );
+
+      mqttClient = mqtt.connect("wss://mqtt.mecatronica-ibero.mx/", options);
 
       mqttClient.on("connect", () => {
-        appendLog("Conectado correctamente.");
+        appendLog(anonymousMode ? "Conectado correctamente en modo anónimo." : "Conectado correctamente con usuario.");
       });
 
       mqttClient.on("message", (topic, message) => {
